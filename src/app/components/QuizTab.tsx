@@ -1,6 +1,8 @@
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { Brain, Flame, Coins, CircleCheck, CircleX, Trophy, Calendar } from "lucide-react";
-import { Button } from "./ui/button";
-import { Card } from "./ui/card";
+
+
 import { useState } from "react";
 
 export function QuizTab() {

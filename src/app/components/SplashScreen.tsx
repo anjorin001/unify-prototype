@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Shield, BookOpen, Users, Brain, ArrowRight } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 
 const steps = [
   {

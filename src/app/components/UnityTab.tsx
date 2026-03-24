@@ -1,8 +1,9 @@
 import { Heart, MessageCircle, Flag, Plus, TrendingUp } from "lucide-react";
-import { Card } from "./ui/card";
-import { Button } from "./ui/button";
+
 import { useState } from "react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 interface Post {
   id: number;
@@ -99,7 +100,7 @@ export function UnityTab() {
         <h2 className="font-semibold mb-3 text-gray-800">Featured Unity Stories</h2>
         <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
           {featuredStories.map((story, index) => (
-            <Card 
+            <Card
               key={index}
               className="min-w-[280px] p-0 overflow-hidden border border-gray-200 cursor-pointer hover:border-[#008751] transition-colors"
             >
@@ -108,7 +109,6 @@ export function UnityTab() {
                   src={`https://source.unsplash.com/400x200/?${encodeURIComponent(story.image)},nigeria`}
                   alt={story.title}
                   className="w-full h-full object-cover"
-                  fallbackText="🇳🇬"
                 />
               </div>
               <div className="p-3">

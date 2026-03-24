@@ -1,7 +1,7 @@
-import { CircleUser, Award, Coins, Flame, TrendingUp, Settings, ChevronRight, Trophy, Target, BookOpen, Phone } from "lucide-react";
-import { Card } from "./ui/card";
-import { Button } from "./ui/button";
-import { Progress } from "./ui/progress";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { CircleUser, Award, Coins, Flame, Settings, ChevronRight, Trophy, Target, BookOpen, Phone } from "lucide-react";
 
 interface Badge {
   id: number;
