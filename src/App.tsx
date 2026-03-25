@@ -8,6 +8,7 @@ import { ProfileTab } from "./app/components/ProfileTab";
 import { QuizTab } from "./app/components/QuizTab";
 import SplashScreen from "./app/components/SplashScreen";
 import { UnityTab } from "./app/components/UnityTab";
+import { AppProvider } from "./app/context/AppContext";
 
 type TabType = "home" | "learn" | "quiz" | "unity" | "profile";
 
@@ -96,9 +97,11 @@ export default function App() {
   );
 
   return (
-    <Routes>
-      <Route path="/" element={tabLayout} />
-      <Route path="/splash" element={<SplashScreen />} />
-    </Routes>
+    <AppProvider>
+      <Routes>
+        <Route path="/" element={tabLayout} />
+        <Route path="/splash" element={<SplashScreen />} />
+      </Routes>
+    </AppProvider>
   );
 }
