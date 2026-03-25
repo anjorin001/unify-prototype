@@ -196,6 +196,18 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ user = MOCK_USER }) => {
 
   const hasPendingAlert = activeEmergency?.status === "pending_sync";
 
+  // ── Scroll the card into view when the modal dismisses ───────
+  const cardRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!showModal && activeEmergency) {
+      // Small delay so the DOM has finished rendering the card
+      const t = setTimeout(() => {
+        cardRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 80);
+      return () => clearTimeout(t);
+    }
+  }, [showModal, activeEmergency]);
+
   return (
     <>
       <div className="h-full overflow-y-auto flex flex-col gap-5 px-4 pt-5 pb-28 max-w-lg mx-auto w-full">
@@ -257,21 +269,23 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ user = MOCK_USER }) => {
         />
 
         {activeEmergency && !showModal ? (
-          activeEmergency.status === "pending_sync" ? (
-            <OfflineEmergencyCard
-              emergency={activeEmergency}
-              user={user}
-              retryCount={retryCount}
-              hasCellSignal={hasCellSignal}
-              onCancel={handleCancel}
-            />
-          ) : (
-            <ActiveEmergencyCard
-              emergency={activeEmergency}
-              onResolve={handleResolve}
-              onCancel={handleCancel}
-            />
-          )
+          <div ref={cardRef}>
+            {activeEmergency.status === "pending_sync" ? (
+              <OfflineEmergencyCard
+                emergency={activeEmergency}
+                user={user}
+                retryCount={retryCount}
+                hasCellSignal={hasCellSignal}
+                onCancel={handleCancel}
+              />
+            ) : (
+              <ActiveEmergencyCard
+                emergency={activeEmergency}
+                onResolve={handleResolve}
+                onCancel={handleCancel}
+              />
+            )}
+          </div>
         ) : (
           <div className="bg-white rounded-2xl border border-gray-100 shadow-sm px-4 py-8">
             <EmergencyButton

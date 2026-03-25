@@ -14,7 +14,6 @@ import React, { useEffect, useState } from "react";
 import { EMERGENCY_TYPES, type EmergencyType } from "../data/mock-home-data";
 import type { User } from "../types";
 
-
 interface EmergencyConfirmedModalProps {
   emergencyType: EmergencyType;
   user: User;
@@ -31,11 +30,19 @@ const EmergencyConfirmedModal: React.FC<EmergencyConfirmedModalProps> = ({
   const [stage, setStage] = useState<"sending" | "dispatched">("sending");
   const config = EMERGENCY_TYPES.find((t) => t.id === emergencyType)!;
 
+  // Step 1 — advance to "dispatched" after 2.5s
   useEffect(() => {
-    if (!isOnline) return; // offline: stays in "sending" until dismissed
+    if (!isOnline) return;
     const t = setTimeout(() => setStage("dispatched"), 2500);
     return () => clearTimeout(t);
   }, [isOnline]);
+
+  // Step 2 — auto-dismiss after showing "dispatched" briefly so the card surfaces
+  useEffect(() => {
+    if (stage !== "dispatched" || !isOnline) return;
+    const t = setTimeout(() => onDismiss(), 1500);
+    return () => clearTimeout(t);
+  }, [stage, isOnline, onDismiss]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-end md:items-center justify-center bg-black/60 backdrop-blur-sm p-4">
@@ -175,7 +182,7 @@ const EmergencyConfirmedModal: React.FC<EmergencyConfirmedModalProps> = ({
             {isOnline && stage === "dispatched"
               ? "Track Responder →"
               : isOnline
-                ? "Sending..."
+                ? "Dismiss"
                 : "Got it — keep retrying"}
           </button>
         </div>
